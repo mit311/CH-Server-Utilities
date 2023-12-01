@@ -1,0 +1,42 @@
+CREATE TABLE info.campaign_groups
+(
+ `campaign_group_id` Nullable(Int32),
+ `advertiser_id` Nullable(Int32),
+ `name` Nullable(String),
+ `create_time` Nullable(DateTime64(6)),
+ `update_time` Nullable(DateTime64(6)),
+ `update_time_raw` Nullable(DateTime64(6)),
+ `description` Nullable(String),
+ `parent_campaign_group_id` Nullable(Int32),
+ `start_time` Nullable(DateTime64(6)),
+ `end_time` Nullable(DateTime64(6)),
+ `budget` Nullable(Decimal(12, 2)),
+ `budget_type_id` Nullable(Int32),
+ `active_flight_id` Nullable(Int32),
+ `deleted` Nullable(UInt8),
+ `objective_id` Nullable(Int32),
+ `goal_value` Nullable(Decimal(12, 2)),
+ `goal_type_id` Nullable(Int32),
+ `goal_type_name` Nullable(String),
+ `budget_lock` Nullable(UInt8),
+ `first_launch_time` Nullable(DateTime64(6)),
+ `client_launch_status` Nullable(String),
+ `extension_budget_split` Nullable(Decimal(12, 2)),
+ `restricted_edits` Nullable(UInt8),
+ `testing_type` Nullable(String),
+ `is_test` Nullable(UInt8),
+ `has_audience_raw` Nullable(UInt8),
+ `has_audience` Nullable(UInt8),
+ `ctv_creatives_status_id_raw` Nullable(Int32),
+ `display_creatives_status_id_raw` Nullable(Int32),
+ `campaign_group_status_id` Nullable(Int32),
+ `campaign_group_status` Nullable(String),
+ `ctv_creatives_status_id` Nullable(Int32),
+ `display_creatives_status_id` Nullable(Int32),
+ `click_url` Nullable(String),
+ `frequency_cap_impressions` Nullable(Int16),
+ `frequency_cap_duration` Nullable(String)
+)
+ENGINE = MergeTree
+ORDER BY campaign_group_id
+SETTINGS allow_nullable_key = 1, index_granularity = 8192
