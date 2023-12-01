@@ -1,4 +1,4 @@
-CREATE VIEW info.v_advertisers
+CREATE VIEW info.v_advertisers ON CLUSTER 'reporting-dev01'
 (
  `advertiser_id` Int32,
  `company_name` String,
