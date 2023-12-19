@@ -1,0 +1,72 @@
+SELECT hostName() AS host, count() 
+  FROM remoteSecure(
+		  'reporting-dev01-{0,1}-{0,1}.mountain-altinity.altinity.cloud',
+		  summarydata, 
+		  all_facts_local, 
+		  'admin', 
+		  'St33lh0use#Dev'
+	   ) 
+  GROUP BY host;
+
+-- Runnig Queries Details
+SELECT query_id, user, address, elapsed, query FROM system.processes ORDER BY query_id;
+
+--- Size of tables DB, Table, Column 
+SELECT
+  database,
+  table,
+  column,
+  type,
+  sum(rows) AS rows,
+  sum(column_data_compressed_bytes) AS compressed_bytes,
+  formatReadableSize(compressed_bytes) AS compressed,
+  formatReadableSize(sum(column_data_uncompressed_bytes)) AS uncompressed,
+  sum(column_data_uncompressed_bytes) / compressed_bytes AS ratio,
+  any(compression_codec) AS codec
+FROM system.parts_columns AS pc
+LEFT JOIN system.columns AS c
+ON (pc.database = c.database) AND (c.table = pc.table) AND (c.name = pc.column)
+WHERE (database LIKE '%') AND (table LIKE '%') AND active
+GROUP BY
+  database,
+  table,
+  column,
+  type
+ORDER BY database, table, sum(column_data_compressed_bytes) DESC;
+
+
+SELECT
+    type,
+    query_start_time,
+    formatReadableTimeDelta(query_duration_ms) AS query_duration,
+    query_id,
+    query_kind,
+    is_initial_query,
+    query,
+    concat(toString(read_rows), ' rows / ', formatReadableSize(read_bytes)) AS read,
+    concat(toString(result_rows), ' rows / ', formatReadableSize(result_bytes)) AS result,
+    formatReadableSize(memory_usage) AS `memory usage`,
+    exception,
+    concat('\n', stack_trace) AS stack_trace,
+    user,
+    initial_user,
+    multiIf(empty(client_name), http_user_agent, concat(client_name, ' ', toString(client_version_major), '.', toString(client_version_minor), '.', toString(client_version_patch))) AS client,
+    client_hostname,
+    databases,
+    tables,
+    columns,
+    used_aggregate_functions,
+    used_dictionaries,
+    used_formats,
+    used_functions,
+    used_table_functions
+FROM system.query_log
+WHERE (type != 'QueryStart') AND (query_kind = 'Select') AND (event_date >= (today() - 1)) AND (event_time >= (now() - toIntervalDay(1)))
+ORDER BY query_duration_ms DESC
+LIMIT 10;
+
+-- Table Part File Details
+select partition, part_name, rows, marks, primary_key_size
+from system.parts
+where table in ('all_facts_local_rand_sorted')
+  and active;
