@@ -4,13 +4,13 @@
 # CLICKHOUSE_HOST="10.4.34.182"
 # CLICKHOUSE_PORT="9000"
 # CLICKHOUSE_USER="r2ds"
-# CLICKHOUSE_PASSWORD="l4NyQ10zTZoFIbKNYDsdRoy6IHruojPe"
+# CLICKHOUSE_PASSWORD="*********"
 # DATABASE_NAME="invoice"
 
 CLICKHOUSE_HOST="reporting-dev01.mountain-altinity.altinity.cloud"
 CLICKHOUSE_PORT="9440"
 CLICKHOUSE_USER="admin"
-CLICKHOUSE_PASSWORD="St33lh0use#Dev"
+CLICKHOUSE_PASSWORD="******"
 DATABASE_NAME="info_test"
 
 # Output directory
