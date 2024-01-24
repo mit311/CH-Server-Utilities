@@ -1,4 +1,4 @@
-CREATE VIEW info.v_city
+CREATE VIEW info.v_city ON CLUSTER 'all-replicated'
             (
              `city` String,
              `region` String,
