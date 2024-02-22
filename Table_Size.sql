@@ -1,3 +1,19 @@
+select partition, formatReadableSize(sum(bytes_on_disk))
+from clusterAllReplicas('reporting-dev01', system.parts)
+where database = 'summarydata'
+  and table like '%all_facts_local'
+group by partition
+order by partition FORMAT Vertical;
+
+
+select partition, formatReadableSize(sum(bytes_on_disk))
+from clusterAllReplicas('reporting-dev01', system.parts)
+where database = 'summarydata'
+  and table like '%all_facts_local_daily'
+group by partition
+order by partition FORMAT Vertical;
+
+
 SELECT database,
        table,
        column,
