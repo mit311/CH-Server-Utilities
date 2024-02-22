@@ -1,0 +1,62 @@
+WITH weekly AS
+    (
+        SELECT
+            toDate(hour) AS day,
+            count() AS cnt
+        FROM summarydata.all_facts_daily
+        WHERE   (hour >= '2023-11-01') AND (hour < '2023-11-05')
+        GROUP BY
+            day,
+            advertiser_id,
+            campaign_group_id,
+            campaign_id,
+            channel_id,
+            objective_id,
+            group_id,
+            creative_id,
+            country,
+            metro_id,
+            region,
+            city,
+            postal_code,
+            domain,
+            private_marketplace_id,
+            supply_vendor,
+            device_type
+    )
+SELECT
+    day,
+    count(*)
+FROM weekly
+GROUP BY 1
+ORDER BY 1 ASC;
+
+WITH weekly AS(
+        SELECT
+        day AS day,
+        count() AS cnt
+        FROM cluster('reporting-dev01', summarydata.all_facts_local_by_day)
+        WHERE   (day >= '2023-11-01') AND (day < '2023-11-05')
+        group by day,
+            advertiser_id,
+            campaign_group_id,
+            campaign_id,
+            channel_id,
+            objective_id,
+            group_id,
+            creative_id,
+            country,
+            metro_id,
+            region,
+            city,
+            postal_code,
+            domain,
+            private_marketplace_id,
+            supply_vendor,
+            device_type)
+ SELECT
+    day,
+    count(*)
+FROM weekly
+GROUP BY 1
+ORDER BY 1 ASC;
