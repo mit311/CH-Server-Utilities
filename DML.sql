@@ -6,3 +6,10 @@ FROM system.parts
 WHERE
 database = 'summarydata' AND table = 'all_facts_local' and  partition = '202312'
 format TSVRaw;
+
+
+RENAME TABLE
+summarydata.all_facts_local TO summarydata.all_facts_local1,
+summarydata.all_facts TO summarydata.all_facts1
+ON CLUSTER 'reporting-dev01';
+
