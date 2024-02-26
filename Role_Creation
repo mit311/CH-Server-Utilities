@@ -1,0 +1,14 @@
+New User :
+
+
+CREATE USER  XXXX ON CLUSTER 'reporting-dev01' IDENTIFIED WITH plaintext_password BY 'XXXX' SETTINGS PROFILE 'readonly';
+GRANT SHOW TABLES, SELECT ON summarydata.* TO qa_user;
+GRANT SHOW TABLES, SELECT ON info.* TO qa_user;
+
+---> Create a secret in k8s
+
+CREATE ROLE qa_access_role ON CLUSTER 'reporting-dev01';
+GRANT SHOW TABLES, SELECT ON summarydata.* TO qa_access_role;
+GRANT SHOW TABLES, SELECT ON info.* TO qa_access_role;
+
+GRANT qa_access_role TO qa_user;
