@@ -1,0 +1,25 @@
+[{
+        "aid": [
+            32185
+        ],
+        "uid": 118728,
+        "data": [
+			 
+            "graph.impressions",
+					  "stateinfo.name",
+					"adinfo.size",
+					"marketingobjectiveinfo.id",
+					"campaigninfo.id"
+        ],
+        "begin": "2023-11-01",
+        "end": "2023-11-30",
+        "format": "human",
+        "fullname": false,
+        "nodatatiercheck": "TVmaw6O3U8l0BzPjcabDZYCy66cJjb4f",
+        "limit": 2000,
+      	"sort" : ["cityinfo.name desc"],
+	      "filter": {
+					
+					"AND": { "stateinfo.name": "Maine", "adinfo.size": "1920x1080" , "marketingobjectiveinfo.id": {"in": ["1"]}, "campaigninfo.id": {"in": ["23742"]}}
+				}
+}]	
